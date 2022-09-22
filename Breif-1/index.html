@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="./main.css" />
+
+</head>
+
+<body>
+    <nav>
+        Random Sujet de vielle
+    </nav>
+    <div class="main">
+
+        <div class="">
+            <div class="flex justify-center list_read">
+                <ul id="read" class="bg-white bg-opacity-10 rounded-lg border border-gray-200 w-96 text-gray-900 ">
+                    <li class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">An item</li>
+                    <li class="px-6 py-2 border-b border-gray-200 w-full">A second item</li>
+                    <button onclick="readList()">afficher</button>
+
+                </ul>
+            </div>
+        </div>
+        <div class="">
+
+            <main>
+                <section class="task-list flex">
+                    <!--<h2>List</h2> -->
+
+                    <div id="myList" class="place-content-center flex-1">
+                        <!--<h2>Wich Date</h2>-->
+                        <!--<input type="date"/>-->
+                        <div class="">
+                            <h2>Add Name 🧑🏻‍💻 </h2>
+                            <form id="new-task-form">
+                                <input type="text" name="new-task-input" id="new-task-input" placeholder="Name" />
+                                <a id="new-task-submit" onclick="addList()" value="Add" /></a>
+                            </form>
+
+
+                        </div>
+
+                        <div class="">
+                            <div class="bg-violet-600 rounded-lg w-20 mb-2">
+                                <button onclick="random()" class="az">Boom ! 💣</button>
+                            </div>
+                            <div class="rounded-lg  bg-[#1f2937] text-white">
+                                Apprenant:
+                                <br />
+                                Date:
+                                <br />
+                                Sujet de vielle:
+                            </div>
+                        </div>
+
+                </section>
+            </main>
+        </div>
+
+
+
+        <script src="./main.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script type="text/javascript">
+            
+            const addList = () => {
+                const input = document.querySelector("#new-task-input");
+                const value = input.value;
+                console.log(value)
+                const data = {
+                    name: value
+                }
+                fetch('http://localhost:3000/apprenant', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then((response) => console.log(response))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
+            //let arr;
+            const readList = () => {
+                //fetch('http://localhost:3000/apprenant').then(response=> response.json()).then(data =>  arr = JSON.parse(data) )
+                //console.log(arr.length)
+                //console.log(arr)
+                //var readli = document.createElement('li');
+                //var n = arr.length;
+                //var read = document.getElementById('read') ;
+                //for(var i = 0; i < n; i++) {
+                 //   readli.value += arr[i].value
+                    //console.log(readli.value,"llllllll")
+                //}
+                //read.appendChild(readli)
+                
+            }
+            let getDate = new Date() ,
+                getMonth = getDate.getMonth()+1,
+                getYear = getDate.getFullYear();
+                getDay = getDate.getUTCDay();
+                days = ["Mon", "Tues", "Wednes", "Thurs", "Fri"],
+                daysOff = ["Satur", "Sun"];
+            
+            let number , arr = [],removearr = [],idRandom ;
+            
+            const random = () => {
+                fetch('http://localhost:3000/apprenant')
+                .then(response =>response.json())
+                .then(data => arr = data)
+                .then(data =>number = data.length);
+                let a = 0;
+                while ( a == 0 ) {
+                    idRandom = Math.floor(Math.random() * number);
+                    localStorage.setItem("id",idRandom+1)
+                    if(removearr.indexOf(idRandom)){
+                        idRandom = Math.floor(Math.random() * number);
+                        localStorage.setItem("id",idRandom+1);
+                        removearr.push(localStorage.getItem("id"))
+                        console.log("hello",removearr);
+                        a = 1;
+                    }
+                    //idRandom = Math.floor(Math.random() * number);
+                    //removearr.push(localStorage.getItem("id"))
+    
+                    //console.log(removearr,"remove")
+                   }
+                //idRandom = Math.floor(Math.random() * number);
+                //localStorage.setItem("id",idRandom+1)
+                //removearr.push(localStorage.getItem("id"))
+
+                //console.log(removearr,"remove")
+                //localStorage.setItem('monChat', 'Tom');
+                //console.log(localStorage.getItem('monChat'))
+                //console.log(arr[idRandom])
+                ///arr = arr.filter(item => item !== item[idRandom])
+                //arr.splice(idRandom, 1)
+                //console.log(arr)
+                //console.log(arr[idRandom],getDay,getMonth,getYear)
+            }
+            
+
+            
+            
+            </script>
+            <!--fetch('http://localhost:3000/apprenant').then((data)=> console.log(data.json))-->
+</body>
+
+</html>

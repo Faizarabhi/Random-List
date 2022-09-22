@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: .5rem;
+
+}
+
+.nav{
+    background-color: rgb(212, 227, 255);
+}
+.main{
+    background-color: rgb(255, 230, 235);
+    display: flex;
+    width: 100%;
+    height: 80vh;
+}
+.left{
+    background-color: rgb(228, 255, 255);
+    width: 70%;
+    height: 100%;
+
+}
+.card{
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: black;
+}
+button{
+    background-color: rgb(204, 199, 252);
+    border-radius: .4rem;
+    border-style: none;
+
+}
+#date{
+    
+}
+.list{
+    width: 90%;
+    height: 20%;
+    background-color: rgb(241, 241, 241);
+    border-radius: .5rem;
+}
+input{
+    border: none;
+    border-radius: .3rem;
+    
+}
+.right{
+    background-color: rgb(255, 246, 235);
+    width: 30%;
+    height: 100%;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
