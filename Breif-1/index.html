@@ -105,34 +105,109 @@
             }
             let getDate = new Date() ,
                 getMonth = getDate.getMonth()+1,
-                getYear = getDate.getFullYear();
+                getYear = getDate.getFullYear(),
+                arrdate = [];
                 getDay = getDate.getUTCDay();
                 days = ["Mon", "Tues", "Wednes", "Thurs", "Fri"],
-                daysOff = ["Satur", "Sun"];
+                weekend = ["Satur", "Sun"];
+                dayOff = [
+                    {day: 1, month: 1}, 
+                    {day: 11, month: 1}, 
+                    {day: 1, month: 5},
+                    {day: 4, month: 5},
+                    {day: 9, month: 6},
+                    {day: 10, month: 6},
+                    {day: 30, month: 6},
+                    {day: 31, month: 7},
+                    {day: 14, month: 8},
+                    {day:20, month:8},
+                    {day:21, month:8},
+                    {day:9, month:10},
+                    {day:6, month:11},
+                    {day:18, month:11}]
+                day = {month: getMonth, day: getDay}
+               
+                
+
+
+
+
+
+
+
+
+
             
-            let number , arr = [],removearr = [],idRandom ;
+            let number , arr = [],removearr =[],idRandom = 2 ;
             
-            const random = () => {
+            const random = () =>{
                 fetch('http://localhost:3000/apprenant')
                 .then(response =>response.json())
                 .then(data => arr = data)
                 .then(data =>number = data.length);
-                let a = 0;
-                while ( a == 0 ) {
-                    idRandom = Math.floor(Math.random() * number);
-                    localStorage.setItem("id",idRandom+1)
-                    if(removearr.indexOf(idRandom)){
-                        idRandom = Math.floor(Math.random() * number);
-                        localStorage.setItem("id",idRandom+1);
-                        removearr.push(localStorage.getItem("id"))
-                        console.log("hello",removearr);
-                        a = 1;
-                    }
+                
+                let idRandom = Math.floor(Math.random() * number);
+               
+                    var i = 0;
+                    let max = 0
+                   
+                    if( max == number+1){ 
+                            console.log("done")
+                         return 
+                        }
+                        else if(!removearr.includes(idRandom)){
+                       
+                           
+                            //console.log(idRandom)
+                            removearr.push(idRandom);
+                            //console.log(arr[idRandom].name)
+                            //console.log(removearr)
+                            max = removearr.length
+
+                            
+                        }
+                        else{
+                             idRandom = Math.floor(Math.random() * number);
+                             console.log(idRandom)
+                        }
+                        if(arrdate.includes(getMonth)  != true){
+                            arrdate.push(getMonth)
+                            console.log(getMonth, "month");
+                            getMonth = getMonth+1
+                            //console.log(day,"da")
+                        }else{
+                            
+                            //console.log(arrdate)
+                        }
+
+
+                        if(!dayOff.includes(day) ){
+                    dayOff.push(day)
+                    getDay = getDay+1
+                    console.log(day,"ana")
+                }
+
+                    
+                        //    idRandom = Math.floor(Math.random() * number);
+                        //    console.log("hello random")
+                        
+                    
+                    
+                    //if(removearr.includes(idRandom)){
+                    //    console.log("if")
+                    //}
+                    //else{
+                    //    idRandom = Math.floor(Math.random() * number);
+                    //    localStorage.setItem("id",idRandom+1);
+                    //    removearr.push(localStorage.getItem("id"))
+                    //    console.log("hello",removearr);
+                    //    a = 1;
+                    //}
                     //idRandom = Math.floor(Math.random() * number);
                     //removearr.push(localStorage.getItem("id"))
     
                     //console.log(removearr,"remove")
-                   }
+                   //}
                 //idRandom = Math.floor(Math.random() * number);
                 //localStorage.setItem("id",idRandom+1)
                 //removearr.push(localStorage.getItem("id"))
@@ -141,7 +216,7 @@
                 //localStorage.setItem('monChat', 'Tom');
                 //console.log(localStorage.getItem('monChat'))
                 //console.log(arr[idRandom])
-                ///arr = arr.filter(item => item !== item[idRandom])
+                ///arr = arr.filter(item => item != item[idRandom])
                 //arr.splice(idRandom, 1)
                 //console.log(arr)
                 //console.log(arr[idRandom],getDay,getMonth,getYear)
