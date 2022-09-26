@@ -19,10 +19,11 @@
 
         <div class="">
 
-            <button onclick="arrdate()">test</button>
-           <!--- <button onclick="readList()">afficher</button>-->
-            <button onclick="bestRandom()">Random</button>
-            <button onclick="getDate()">getdate</button>
+            
+            
+            
+            
+            
             <div class="flex justify-center list_read">
                 <ul id="read" class="bg-white bg-opacity-10 rounded-lg border border-gray-200 w-96 text-gray-900 ">
                     <li class="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">An item</li>
@@ -52,7 +53,7 @@
 
                         <div class="">
                             <div class="bg-violet-600 rounded-lg w-20 mb-2">
-                                <button onclick="random()" class="az">Boom ! 💣</button>
+                                <button onclick="getarraydate()" class="az">Boom ! 💣</button>
                             </div>
                             <div class="rounded-lg  bg-[#1f2937] text-white">
                                 Apprenant:
@@ -72,7 +73,7 @@
         <script src="./main.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script type="text/javascript">
-            let a,newarr = [];
+            let ap,newarr = [];
             const addList = () => {
                 const input = document.querySelector("#new-task-input");
                 const value = input.value;
@@ -99,14 +100,15 @@
                 .then(response=> response.json())
                 .then(data => getapprenant  = data)
                 
-                //console.log(getapprenant,"getaprenant" )
+                
                 getapprenant =  shuffle(getapprenant)
-                console.log(getapprenant,"shuffle")
+                //console.log(getapprenant,"shuffle")
+                
             };
             function shuffle(arr){
 
                 let max = arr.length, idRandom, c;
-                a = max;
+                ap = max;
                 
                 //console.log(max)
                 for(let i = 0; i < max; i++){
@@ -115,123 +117,88 @@
                     arr[i] = arr[idRandom];
                     arr[idRandom] = c;
                 }
+                //console.log(arr,"get new array apprenant")
                 return arr
-                console.log(arr,"get new array apprenant")
-                //console.log(arr,"arr")
-            }
-            // get array all Date
-            // get arrdate filter weekend and hooliday 
-            // count length array date if < number apprenant 
-            // rest = arrdate.length - arraprenant.length 
-            // max = rest 
-            function getDate () {
-               
-                
                 
             }
-            let days = [];
-            // get Date max nombre aprenant before filter
-            function arrdate(){
-                let getDate = new Date() ,
-                getYear = getDate.getFullYear(),
-                getMonth = getDate.getMonth()+1,
-                getDay = getDate.getDay()*4;
-                console.log(getDay)
-                // get 31 days and 12 month
+            let arrdate = [];
+            function getarraydate(){
+           // get Date 
+           bestRandom()
+            for( var i = 1; i< ap+1; i++){
+                let firstday = new Date();
+                firstday.setDate(firstday.getDate()+i);
+                let date = new Date(firstday);
+                //console.log(firstday,'rr')
+                let numberday = date.getDay();
+                let day = date.getDate();
+                let month = date.getMonth()+1;
+                let year = date.getFullYear();
+                //console.log(numberday)
+                if(day.toString().length == 1){
+                    day = "0" + day;
+                }
+                if(month.toString().length == 1){
+                    month = "0" + month;
+                }
+                let fulldate = year+"-"+month+"-"+day;
+                //console.log(fulldate)
+                if(numberday == 0 || numberday == 6){
+                    //console.log("weekend")
+                    ap++
+                }
+                else{
+                    arrdate.push(fulldate)
+                }
+                //console.log(ap)
 
-                if(getdateRandom < a){
-                for(var i = 0; i< a ; i++){
-                    var c = 0;
-                    getDay = getDay+c+1;
-                    // console.log("hello")
-                    if(getDay > 31 ){
-                        getDay = 1;
-                        c = 1;
-                        if(getMonth == 13){
-                            getYear = getYear+1
-                        }
-                    }
-                    getdateRandom.push([getYear,getMonth,getDay])  
-                    
-                    c++;
+
+            }
+            filterHolidays(ap)
+            console.log(arrdate,getapprenant)
+            console.log(ap)
+            
+            
                 }
                 
-                filterWeekend();
 
-                }
-                
-                
-                
-            }
 
-            // getName for filter weekend
-            function getNameday(date){
-                var d = new Date(date);
-                var dayName  = d.toString().split(' ')[0];
-                return dayName;
-            }
+                
+                
+                
+                
+            
+
+                Holiday();
             
             // filter week 
-            function filterWeekend(){
-                let weekend = ["Sat", "Sun"];
-                
-                
-                // kayt3ta f lconsole 
-                getdateRandom.map(item => days.push(getNameday(item)))
-                //console.log(getdateRandom,"bbbbbb")
-                //console.log(days,"days")
-                
-                for(var i = 0; i < a; i++ ){
-                    newarr.push([getdateRandom[i],days[i]])   
-                }
+            let holidays = [];
+            function Holiday(){
+               fetch('https://date.nager.at/api/v3/publicholidays/2022/MA')
+                .then((response) => response.json())
+                .then((data) => {
+                    for(var i=0 ; i < data.length ; i++){
+                        holidays.push(data[i].date)
 
-                //let arrfilter = days.filter(x => !weekend.includes(x));
-                //console.log(arrfilter,"arrfilter")
-                //if(newarr.indexOf('Sat') || newarr.indexOf('Sun')){
-                   // newarr.map((item) => {
-                       // if(item == "Sat" || item == "Sun"){
-                      //  console.log("danger")
-                    //}})
-                    
-                    // newarr = newarr.filter((day) => {
-                         
-                    //     console.log("ttt")
-                    //    return day != "Sat" && day != "Sun" 
-                  //  })
+                    }
+                    //console.log(holidays)
 
-                //}
-                // a = ap
-                console.log(newarr,"newarr")
-                console.log(weekend)
-                for(var i = 0 ; i < newarr.length ; i++){
-                    for(var j = 0 ; j < weekend.length ; j++){
-                        
-                        //console.log(newarr[i][1] + "&&" + weekend[j])
-                        if(newarr[0][1] === weekend[j]) {
-                            newarr.splice(0, 1);
-                           console.log("splice")
+                
+                })
+
+
+            }
+            function filterHolidays(ap){
+                for(var i = 0; i < holidays.length; i++){
+                    for(var j=0; j<arrdate.length; j++){
+                        if(holidays[i] == arrdate[j]  ){
+                            let index = aardate.indexOf(arrdate[j])
+                            arrdate.splice(index,1);
+                            ap++
+
                         }
+                    }
                 }
-                console.log(newarr[i][1])
-                }
-                //for (var i = 0; i < a; i++) {
-                //     console.log(newarr[i][1])
-                 // if (newarr[i][1] == weekend[0] || newarr[i][1] == weekend[1]) {
-                 //  newarr.splice(i, 1);
-                 //  }
-                //}
-
-                
-                
-                //console.log(newarr[1][1],"newarr")
-                //getdateRandom.map(item => console.log(getNameday(item)))
-                return newarr
-            }
-            // filter Holiday
-            function filterHoliday(){
-               
-
-
             }
 
 
@@ -243,26 +210,7 @@
 
 
 
-
-            
-            //let arr;
-            const readList = () => {
-                fetch('http://localhost:3000/apprenant')
-                .then(response=> response.json())
-                .then(data =>  arr = data )
-                console.log(arr.length)
-                console.log(arr)
-                var readli = document.createElement('ul');
-                var n = arr.length
-                var read = document.getElementById('read') ;
-                for(var i = 0; i < n; i++) {
-                   readli.value += arr[i].value
-                   // console.log(readli.value,"afficher li")
-                }
-                read.appendChild(readli)
-                
-            }
-
+           
 
 
             
@@ -280,114 +228,13 @@
 
 
             
-            let number , arr = [],removearr =[],idRandom = 2 ;
-            
-            const random = () =>{
-                fetch('http://localhost:3000/apprenant')
-                .then(response =>response.json())
-                .then(data => arr = data)
-                .then(data =>number = data.length);
-                
-                let idRandom = Math.floor(Math.random() * number);
-                console.log(dayRandom)
-                //dayRandom.forEach(element => {
-                    //element.day++
-                //    console.log(element)
-                //});
-                //console.log(dayRando)
-                    var i = 0;
-                    let max = 0
-                   
-                    if( max == number+1){ 
-                            console.log("done")
-                         return 
-                        }
-                    
-                        else if(!removearr.includes(idRandom)){
-                       
-                           
-                            //console.log(idRandom)
-                            //removearr.push(idRandom);
-                            //console.log(arr[idRandom])
-                            //console.log(removearr)
-                           // max = removearr.length
-
-                            
-                        //}
-                        //else{
-                             //idRandom = Math.floor(Math.random() * number);
-                             //console.log(idRandom)
-                        }
-                        // Array of date == number 
-                        if(arrdate.includes(getMonth)  != true && arrdate.length < number ){
-                            //console.log(getMonth,"r")
-                            for(var i ; i<number; i++){
-                                idRandom = Math.floor(Math.random() * number);
-                                removearr.push(idRandom)
-
-                            }
-                            for(var i = 0 ;i <number; i++){
-                            arrdate.push([month = getMonth,day = getDay])
-                            //arrdate.push(getMonth)
-                            //console.log(getMonth, "month");
-                            //getMonth = getMonth+1
-                            if(getDay == 31 && getMonth == 12 ){
-                                getDay == 1;
-                                getMonth == 1;
-                            }
-                            // khdma dyal nhar y incrementa m3a chher moraha ychof ila kayn f holday yzed y incrementi 
-                            getDay = getDay+1;
-                            
-                        }
-                            console.log(arrdate,"arraydate",removearr,"removearr")
-                            removearr.forEach(element => console.log(element))
-                        }else{
-                            
-                            //console.log(arrdate)
-                        }
-
-
-
-                    
-                        //    idRandom = Math.floor(Math.random() * number);
-                        //    console.log("hello random")
-                        
-                    
-                    
-                    //if(removearr.includes(idRandom)){
-                    //    console.log("if")
-                    //}
-                    //else{
-                    //    idRandom = Math.floor(Math.random() * number);
-                    //    localStorage.setItem("id",idRandom+1);
-                    //    removearr.push(localStorage.getItem("id"))
-                    //    console.log("hello",removearr);
-                    //    a = 1;
-                    //}
-                    //idRandom = Math.floor(Math.random() * number);
-                    //removearr.push(localStorage.getItem("id"))
-    
-                    //console.log(removearr,"remove")
-                   //}
-                //idRandom = Math.floor(Math.random() * number);
-                //localStorage.setItem("id",idRandom+1)
-                //removearr.push(localStorage.getItem("id"))
-
-                //console.log(removearr,"remove")
-                //localStorage.setItem('monChat', 'Tom');
-                //console.log(localStorage.getItem('monChat'))
-                //console.log(arr[idRandom])
-                ///arr = arr.filter(item => item != item[idRandom])
-                //arr.splice(idRandom, 1)
-                //console.log(arr)
-                //console.log(arr[idRandom],getDay,getMonth,getYear)
-            }
+           
             
 
             
             
             </script>
-            <!--fetch('http://localhost:3000/apprenant').then((data)=> console.log(data.json))-->
+           
 </body>
 
 </html>
