@@ -8,9 +8,9 @@
   <p align="center">
     Projet de Tirage Sujet de Veille pour passer le tirage de tous les apprenants et l’enregistrer dans un fichier local .
     <br />
-### passer le tirage de tous les apprenants et l’enregistrer dans un fichier local
-### Ajouter les noms des aprenant pour Ajouter des dates 
-### chaque aprenant ila une date sauf la date weekend ou bien dayOff
+<p>passer le tirage de tous les apprenants et l’enregistrer dans un fichier local</p>
+<p> Ajouter les noms des aprenant pour Ajouter des dates </p>
+<p>chaque aprenant ila une date sauf la date weekend ou bien dayOff</p>
   </p>
 </div>
 ### Built With
