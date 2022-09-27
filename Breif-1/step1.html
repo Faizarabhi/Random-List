@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="./main.css" />
+</head>
+<body>
+    
+    <div class="">
+        <div class="bg-violet-600 rounded-lg h-20  mb-2">
+            <button onclick="getarraydate()" class="w-full h-full text-4xl">Take List 📋</button>
+        </div>
+        <div id="Random" >
+            
+        </div>
+        <a href="./index.html"> 
+            <svg xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="50" height="50">
+                <path d="M15,7H10.17V5.414A2,2,0,0,0,6.756,4L.876,9.879a3,3,0,0,0,0,4.242L6.756,20a2,2,0,0,0,3.414-1.414V17H16a6.006,6.006,0,0,1,6,6,1,1,0,0,0,2,0V16A9.01,9.01,0,0,0,15,7Z"/>
+            </svg>
+            </a>
+    </div>
+    
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+    </body>
+    </html>
+<script type="text/javascript">
+    let ap,newObj = {};
+    const addList = () => {
+        const input = document.querySelector("#new-task-input");
+        const value = input.value;
+        console.log(value)
+        const data = {
+            name: value
+        }
+        fetch('http://localhost:3000/apprenant', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+    var getapprenant = [];
+    var getdateRandom = [];
+    const bestRandom = () => {
+        fetch('http://localhost:3000/apprenant')
+        .then(response=> response.json())
+        .then(data => getapprenant  = data)
+        
+        
+        getapprenant =  shuffle(getapprenant)
+        //console.log(getapprenant,"shuffle")
+        
+    };
+    function shuffle(arr){
+
+        let max = arr.length, idRandom, c;
+        ap = max;
+        
+        //console.log(max)
+        for(let i = 0; i < max; i++){
+            idRandom = Math.floor(Math.random() * max);
+            c = arr[i];
+            arr[i] = arr[idRandom];
+            arr[idRandom] = c;
+        }
+        //console.log(arr,"get new array apprenant")
+        return arr
+        
+    }
+
+    let arrdate = [];
+    function getarraydate(){
+   // get Date 
+   bestRandom()
+    for( var i = 1; i< ap+1; i++){
+        let firstday = new Date();
+        firstday.setDate(firstday.getDate()+i);
+        let date = new Date(firstday);
+        //console.log(firstday,'rr')
+        let numberday = date.getDay();
+        let day = date.getDate();
+        let month = date.getMonth()+1;
+        let year = date.getFullYear();
+        //console.log(numberday)
+        if(day.toString().length == 1){
+            day = "0" + day;
+        }
+        if(month.toString().length == 1){
+            month = "0" + month;
+        }
+        let fulldate = year+"-"+month+"-"+day;
+        //console.log(fulldate)
+        if(numberday == 0 || numberday == 6){
+            //console.log("weekend")
+            ap++
+        }
+        else{
+            arrdate.push(fulldate)
+        }
+        //console.log(ap)
+
+
+    }
+    filterHolidays(ap)
+
+
+
+    //console.log(arrdate,getapprenant)
+
+    for (let i = 0; i < getapprenant.length; i++) {
+        newObj[i] = {
+            "id" : getapprenant[i].id,
+            "name":getapprenant[i].name,
+            "date":arrdate[i]
+        };
+        let oneAp = document.getElementById('Random');
+    let apRandom = document.createElement('div');
+    let apRandomdate = document.createElement('div');
+    apRandom.setAttribute('class',' bg-[#1f2937] text-white w-full animate-in zoom-in mb-4' )
+    apRandomdate.setAttribute('class',' bg-[#1f2937] text-white w-full animate-in zoom-in ' )
+    apRandom.appendChild(document.createTextNode(" Aprenant "+getapprenant[i].name))
+    apRandomdate.appendChild(document.createTextNode(" date "+arrdate[i]))
+    oneAp.appendChild(apRandomdate)
+    oneAp.appendChild(apRandom)
+    }
+    console.log(newObj,"finish")
+    
+    
+    }
+
+
+    // call function 
+    Holiday();
+    
+    // filter week 
+    let holidays = [];
+    function Holiday(){
+       fetch('https://date.nager.at/api/v3/publicholidays/2022/MA')
+        .then((response) => response.json())
+        .then((data) => {
+            for(var i=0 ; i < data.length ; i++){
+                holidays.push(data[i].date)
+
+            }
+            //console.log(holidays)
+
+        
+        })
+
+
+    }
+    function filterHolidays(ap){
+        for(var i = 0; i < holidays.length; i++){
+            for(var j=0; j<arrdate.length; j++){
+                if(holidays[i] == arrdate[j]  ){
+                    let index = aardate.indexOf(arrdate[j])
+                    arrdate.splice(index,1);
+                    ap++
+
+                }
+            }
+        }
+    }
+   
+    
+    
+    </script>
